@@ -1,13 +1,12 @@
-
 import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Input, RTE, Select } from "..";
+import { Button, Input, Select } from "..";
 import appwriteService from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export default function PostForm({ post }) {
-    const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
+    const { register, handleSubmit, watch, setValue } = useForm({
         defaultValues: {
             title: post?.title || "",
             slug: post?.$id || "",
@@ -89,7 +88,12 @@ export default function PostForm({ post }) {
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
                     }}
                 />
-                <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
+                <Input
+                    label="Content :"
+                    placeholder="Write your content here"
+                    className="mb-4"
+                    {...register("content", { required: true })}
+                />
             </div>
             <div className="w-1/3 px-2">
                 <Input
